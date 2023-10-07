@@ -5,10 +5,9 @@ import com.wellnr.commons.Operators;
 @FunctionalInterface
 public interface Procedure0 {
 
-    void apply() throws Exception;
+  void apply() throws Exception;
 
-    default void run() {
-        Operators.suppressExceptions(this::apply);
-    }
-
+  default void run() {
+    Operators.suppressExceptions(this::apply);
+  }
 }
