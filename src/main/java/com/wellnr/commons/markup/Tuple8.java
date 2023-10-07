@@ -1,3 +1,7 @@
+/*
+ * (C) Copyright 2023. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons.markup;
 
 import lombok.AllArgsConstructor;
@@ -22,5 +26,4 @@ public class Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> {
     public T7 _7;
 
     public T8 _8;
-
 }

@@ -1,3 +1,7 @@
+/*
+ * (C) Copyright 2023. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons.markup;
 
 import com.wellnr.commons.functions.Function0;
@@ -7,37 +11,37 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(staticName = "apply")
 public class When<T> {
 
-  private final boolean condition;
-
-  private final Function0<T> then;
-
-  public static IncompleteWhen isTrue(boolean condition) {
-    return IncompleteWhen.apply(condition);
-  }
-
-  public T otherwise(Function0<T> otherwise) {
-    if (condition) {
-      return then.get();
-    } else {
-      return otherwise.get();
-    }
-  }
-
-  public T otherwise(T otherwise) {
-    return otherwise(() -> otherwise);
-  }
-
-  @AllArgsConstructor(staticName = "apply")
-  public static class IncompleteWhen {
-
     private final boolean condition;
 
-    public <T> When<T> then(Function0<T> then) {
-      return When.apply(condition, then);
+    private final Function0<T> then;
+
+    public static IncompleteWhen isTrue(boolean condition) {
+        return IncompleteWhen.apply(condition);
     }
 
-    public <T> When<T> then(T then) {
-      return then(() -> then);
+    public T otherwise(Function0<T> otherwise) {
+        if (condition) {
+            return then.get();
+        } else {
+            return otherwise.get();
+        }
     }
-  }
+
+    public T otherwise(T otherwise) {
+        return otherwise(() -> otherwise);
+    }
+
+    @AllArgsConstructor(staticName = "apply")
+    public static class IncompleteWhen {
+
+        private final boolean condition;
+
+        public <T> When<T> then(Function0<T> then) {
+            return When.apply(condition, then);
+        }
+
+        public <T> When<T> then(T then) {
+            return then(() -> then);
+        }
+    }
 }

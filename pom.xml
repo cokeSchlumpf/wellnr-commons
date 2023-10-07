@@ -47,11 +47,8 @@
                             </indent>
                         </format>
                     </formats>
-                    <!-- define a language-specific format -->
-                    <java>
-                        <!-- no need to specify files, inferred automatically, but you can if you want -->
 
-                        <!-- apply a specific flavor of google-java-format and reflow long strings -->
+                    <java>
                         <googleJavaFormat>
                             <version>1.18.1</version>
                             <style>AOSP</style>
@@ -59,12 +56,8 @@
                             <formatJavadoc>false</formatJavadoc>
                         </googleJavaFormat>
 
-                        <!-- make sure every file has the following copyright header.
-                          optionally, Spotless can set copyright years by digging
-                          through git history (see "license" section below) -->
                         <licenseHeader>
-                            <content>/* (C)$YEAR Michael Wellner. /* Licensed under Apache-2.0 $YEAR. */ */
-                            </content>  <!-- or <file>${project.basedir}/license-header</file> -->
+                            <file>${project.basedir}/license-header.txt</file>
                         </licenseHeader>
                     </java>
                 </configuration>

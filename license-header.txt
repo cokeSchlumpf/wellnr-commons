@@ -1,0 +1,4 @@
+/*
+ * (C) Copyright $YEAR. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */

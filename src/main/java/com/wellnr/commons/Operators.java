@@ -1,18 +1,19 @@
+/*
+ * (C) Copyright 2023. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons;
 
 import com.wellnr.commons.functions.Function0;
 import com.wellnr.commons.functions.Procedure0;
 import com.wellnr.commons.functions.Procedure1;
-
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.Objects;
 import java.util.Optional;
 
 public final class Operators {
 
-    private Operators() {
-
-    }
+    private Operators() {}
 
     /**
      * Checks whether the stack trace contains the given exception class. If yes it returns this instance.
@@ -80,7 +81,8 @@ public final class Operators {
      * @param <T>      Ther return type.
      * @return The return value of the function or Optional.empty() if the function throws an exception.
      */
-    public static <T> Optional<T> ignoreExceptionsToOptional(Function0<T> supplier, Procedure1<Exception> onError) {
+    public static <T> Optional<T> ignoreExceptionsToOptional(
+            Function0<T> supplier, Procedure1<Exception> onError) {
         try {
             return Optional.of(supplier.apply());
         } catch (Exception e) {
@@ -102,8 +104,7 @@ public final class Operators {
      * @return The return value of the function or the default value if the function throws an exception.
      */
     public static <T> T ignoreExceptionsWithDefault(
-        Function0<T> supplier, T defaultValue, Procedure1<Exception> onError
-    ) {
+            Function0<T> supplier, T defaultValue, Procedure1<Exception> onError) {
 
         try {
             return supplier.apply();
@@ -210,5 +211,4 @@ public final class Operators {
 
         throw new UndeclaredThrowableException(throwable);
     }
-
 }

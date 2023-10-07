@@ -1,8 +1,11 @@
+/*
+ * (C) Copyright 2023. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons.markup;
 
 import com.wellnr.commons.functions.Function1;
 import com.wellnr.commons.functions.Procedure1;
-
 import java.util.Objects;
 import java.util.Optional;
 
@@ -12,7 +15,7 @@ import java.util.Optional;
  * @param <L> The left data type.
  * @param <R> The right data type.
  */
-public sealed abstract class Either<L, R> permits Left, Right {
+public abstract sealed class Either<L, R> permits Left, Right {
 
     public static <L, R> Either<L, R> apply(L left, R right) {
         if (!Objects.isNull(left)) {
@@ -20,7 +23,8 @@ public sealed abstract class Either<L, R> permits Left, Right {
         } else if (!Objects.isNull(right)) {
             return Either.fromRight(right);
         } else {
-            throw new IllegalArgumentException("Either left or right must be not null, but both values are Null");
+            throw new IllegalArgumentException(
+                    "Either left or right must be not null, but both values are Null");
         }
     }
 
@@ -39,7 +43,8 @@ public sealed abstract class Either<L, R> permits Left, Right {
         if (l.isPresent()) {
             return l.get();
         } else {
-            throw new IllegalStateException("Left is not defined. Check with `isLeft` before calling this method.");
+            throw new IllegalStateException(
+                    "Left is not defined. Check with `isLeft` before calling this method.");
         }
     }
 
@@ -50,7 +55,8 @@ public sealed abstract class Either<L, R> permits Left, Right {
         if (r.isPresent()) {
             return r.get();
         } else {
-            throw new IllegalStateException("Right is not defined. Check with `isRight` before calling this method.");
+            throw new IllegalStateException(
+                    "Right is not defined. Check with `isRight` before calling this method.");
         }
     }
 
@@ -63,5 +69,4 @@ public sealed abstract class Either<L, R> permits Left, Right {
     public abstract boolean isRight();
 
     public abstract <T> T map(Function1<L, T> mapLeft, Function1<R, T> mapRight);
-
 }

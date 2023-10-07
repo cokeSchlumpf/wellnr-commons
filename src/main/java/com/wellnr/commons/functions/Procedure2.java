@@ -1,3 +1,7 @@
+/*
+ * (C) Copyright 2023. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons.functions;
 
 import com.wellnr.commons.Operators;
@@ -10,5 +14,4 @@ public interface Procedure2<T1, T2> {
     default void run(T1 t1, T2 t2) {
         Operators.suppressExceptions(() -> this.apply(t1, t2));
     }
-
 }

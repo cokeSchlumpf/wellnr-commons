@@ -1,3 +1,7 @@
+/*
+ * (C) Copyright 2023. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons.markup;
 
 import com.wellnr.commons.functions.Function1;
@@ -12,41 +16,41 @@ import lombok.Value;
 @AllArgsConstructor(staticName = "apply")
 class Right<L, R> extends Either<L, R> {
 
-  R value;
+    R value;
 
-  @Override
-  public Optional<L> getLeft() {
-    return Optional.empty();
-  }
+    @Override
+    public Optional<L> getLeft() {
+        return Optional.empty();
+    }
 
-  @Override
-  public Optional<R> getRight() {
-    return Optional.of(value);
-  }
+    @Override
+    public Optional<R> getRight() {
+        return Optional.of(value);
+    }
 
-  @Override
-  public Either<L, R> ifLeft(Procedure1<L> ifLeft) {
-    return this;
-  }
+    @Override
+    public Either<L, R> ifLeft(Procedure1<L> ifLeft) {
+        return this;
+    }
 
-  @Override
-  public Either<L, R> ifRight(Procedure1<R> ifRight) {
-    ifRight.run(value);
-    return this;
-  }
+    @Override
+    public Either<L, R> ifRight(Procedure1<R> ifRight) {
+        ifRight.run(value);
+        return this;
+    }
 
-  @Override
-  public boolean isLeft() {
-    return false;
-  }
+    @Override
+    public boolean isLeft() {
+        return false;
+    }
 
-  @Override
-  public boolean isRight() {
-    return true;
-  }
+    @Override
+    public boolean isRight() {
+        return true;
+    }
 
-  @Override
-  public <T> T map(Function1<L, T> mapLeft, Function1<R, T> mapRight) {
-    return mapRight.get(value);
-  }
+    @Override
+    public <T> T map(Function1<L, T> mapLeft, Function1<R, T> mapRight) {
+        return mapRight.get(value);
+    }
 }

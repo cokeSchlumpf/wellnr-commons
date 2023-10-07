@@ -1,12 +1,15 @@
+/*
+ * (C) Copyright 2023. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons.markup;
 
 import com.wellnr.commons.functions.Function1;
 import com.wellnr.commons.functions.Procedure1;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
-
-import java.util.Optional;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
@@ -50,5 +53,4 @@ class Left<L, R> extends Either<L, R> {
     public <T> T map(Function1<L, T> mapLeft, Function1<R, T> mapRight) {
         return mapLeft.get(value);
     }
-
 }
