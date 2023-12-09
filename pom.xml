@@ -14,11 +14,22 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!--
     <distributionManagement>
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/cokeSchlumpf/wellnr-commons</url>
+        </repository>
+    </distributionManagement>
+    -->
+
+    <distributionManagement>
+        <repository>
+            <id>wellnr-releases</id>
+            <name>maven-releases</name>
+            <url>https://nexus.home.wellnr.de/repository/maven-releases/</url>
+            <uniqueVersion>false</uniqueVersion>
         </repository>
     </distributionManagement>
 

@@ -13,8 +13,16 @@ public final class ReflectionOperators {
 
     private ReflectionOperators() {}
 
+    /**
+     * Returns a list of methods in the given class which are annoted with the given annotation.
+     *
+     * @param clazz           The class to inspect.
+     * @param annotationClass The annotation class to look for.
+     * @return A list of methods in the given class which are annoted with the given annotation.
+     */
     public static List<Method> getMethodsWithAnnotation(
             Class<?> clazz, Class<? extends Annotation> annotationClass) {
+
         return Arrays.stream(clazz.getDeclaredMethods())
                 .filter(method -> method.isAnnotationPresent(annotationClass))
                 .toList();
