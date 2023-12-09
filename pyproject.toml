@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wellnr-commons"
-version = "0.0.1"
+version = "0.1.0"
 description = "A Java library containing common functions used by multiple projects within the organization."
 authors = ["Michael Wellner <michael.wellner@gmail.com>"]
 license = "Apache-2.0"
@@ -15,9 +15,9 @@ commitizen = "^3.13.0"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.0.1"
+version = "0.1.0"
 version_files = [
-    "src/__version__.py",
+    "pom.xml",
     "pyproject.toml:version"
 ]
 
