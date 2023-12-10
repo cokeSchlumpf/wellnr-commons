@@ -1,4 +1,4 @@
-name: Development Release
+name: Release
 
 on:
   push:
@@ -78,6 +78,8 @@ jobs:
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'gh-actions@users.noreply.github.com'
         poetry run cz bump --yes --changelog
+        
+        git push --tags
 
     - name: Deploy Release
       run: mvn deploy
