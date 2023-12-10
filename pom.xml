@@ -6,23 +6,13 @@
 
     <groupId>com.wellnr</groupId>
     <artifactId>wellnr-commons</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <!--
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/cokeSchlumpf/wellnr-commons</url>
-        </repository>
-    </distributionManagement>
-    -->
 
     <distributionManagement>
         <repository>
@@ -31,6 +21,12 @@
             <url>https://nexus.home.wellnr.de/repository/maven-releases/</url>
             <uniqueVersion>false</uniqueVersion>
         </repository>
+
+        <snapshotRepository>
+            <id>wellnr-releases</id>
+            <name>maven-snapshots</name>
+            <url>https://nexus.home.wellnr.de/repository/maven-snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <dependencies>
