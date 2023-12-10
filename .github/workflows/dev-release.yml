@@ -75,5 +75,8 @@ jobs:
     - name: Bump Version
       run: poetry run cz bump --yes --increment PATCH --files-only
 
+    - name: Debug
+      run: cat ~/.m2/settings.xml
+
     - name: Snapshot Release
       run: mvn deploy
