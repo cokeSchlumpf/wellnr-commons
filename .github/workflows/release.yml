@@ -22,11 +22,12 @@ jobs:
     - name: Run Tests
       run: mvn test
 
-  devrelease:
+  release:
     name: Release
     needs:
     - test
     runs-on: ubuntu-latest
+    environment: production
     permissions:
       contents: write
 
