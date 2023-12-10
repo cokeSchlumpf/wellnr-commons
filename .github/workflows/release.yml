@@ -79,6 +79,7 @@ jobs:
         git config --global user.email 'gh-actions@users.noreply.github.com'
         poetry run cz bump --yes --changelog
         
+        git push
         git push --tags
 
     - name: Deploy Release
