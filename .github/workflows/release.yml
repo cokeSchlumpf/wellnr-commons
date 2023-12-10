@@ -71,7 +71,13 @@ jobs:
       run: poetry install --no-interaction --no-root
 
     - name: Bump Version
-      run: poetry run cz bump --yes --increment PATCH --files-only
+      run: |
+        mvn versions:set -DremoveSnapshot
+        rm pom.xml.versionsBackup
+        
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'gh-actions@users.noreply.github.com'
+        poetry run cz bump --yes --changelog
 
     - name: Deploy Release
       run: mvn deploy
