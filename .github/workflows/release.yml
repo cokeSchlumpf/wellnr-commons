@@ -26,12 +26,12 @@ jobs:
       run: mvn test
 
   devrelease:
-    name: Development Release
+    name: Release
     needs:
     - test
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
 
     steps:
     - uses: actions/checkout@v3
@@ -73,7 +73,7 @@ jobs:
     - name: Bump Version
       run: poetry run cz bump --yes --increment PATCH --files-only
 
-    - name: Deploy Snapshot Release
+    - name: Deploy Release
       run: mvn deploy
       env:
         NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}

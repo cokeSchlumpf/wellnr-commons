@@ -1,5 +1,7 @@
 # wellnr-commons
 
+[![Development Release](https://github.com/cokeSchlumpf/wellnr-commons/actions/workflows/dev-release.yml/badge.svg?branch=main)](https://github.com/cokeSchlumpf/wellnr-commons/actions/workflows/dev-release.yml)
+
 This Java library contains simple Java operators which are often used in my projects. The library has no additional dependencies.
 
 ---
