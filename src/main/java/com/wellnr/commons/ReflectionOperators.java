@@ -9,6 +9,9 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Util class for extending Java reflection APIs.
+ */
 public final class ReflectionOperators {
 
     private ReflectionOperators() {}
