@@ -79,7 +79,7 @@ jobs:
       run: poetry install --no-interaction
 
     - name: Bump Version
-      run: cz bump --increment PATCH
+      run: cz bump
 
     - name: Snapshot Release
       run: mvn deploy
