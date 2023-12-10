@@ -74,9 +74,6 @@ jobs:
 
     - name: Bump Version
       run: |
-        mvn versions:set -DremoveSnapshot
-        rm pom.xml.versionsBackup
-        
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'gh-actions@users.noreply.github.com'
         poetry run cz bump --yes --changelog --files-only
@@ -85,7 +82,9 @@ jobs:
         git push --tags
 
     - name: Deploy Release
-      run: mvn deploy
+      run: |
+        mvn versions:set -DremoveSnapshot -DgenerateBackupPoms=false
+        mvn deploy
       env:
         NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
         NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
