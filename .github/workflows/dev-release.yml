@@ -73,7 +73,7 @@ jobs:
       run: poetry install --no-interaction --no-root
 
     - name: Bump Version
-      run: poetry run cz bump
+      run: poetry run cz bump --yes
 
     - name: Snapshot Release
       run: mvn deploy
