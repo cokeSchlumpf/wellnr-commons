@@ -44,8 +44,8 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         server-id: wellnr-releases
-        server-username: ${{ secrets.NEXUS_USERNAME }}
-        server-password: ${{ secrets.NEXUS_PASSWORD }}
+        server-username: NEXUS_USERNAME
+        server-password: NEXUS_PASSWORD
 
     - name: Set up Python
       id: setup-python
@@ -80,3 +80,6 @@ jobs:
 
     - name: Snapshot Release
       run: mvn deploy
+      env:
+        NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
