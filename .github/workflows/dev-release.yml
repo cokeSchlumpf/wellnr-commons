@@ -27,13 +27,10 @@ jobs:
     - name: Run Tests
       run: mvn test
 
-    - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-
   devrelease:
     name: Development Release
+    needs:
+    - test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -75,11 +72,8 @@ jobs:
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       run: poetry install --no-interaction --no-root
 
-    - name: Install Python tooling
-      run: poetry install --no-interaction
-
     - name: Bump Version
-      run: cz bump
+      run: poetry run cz bump
 
     - name: Snapshot Release
       run: mvn deploy
