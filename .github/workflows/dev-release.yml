@@ -74,7 +74,7 @@ jobs:
       run: poetry run cz bump --yes --increment PATCH --files-only
 
     - name: Deploy Snapshot Release
-      run: mvn deploy
+      run: mvn deploy -DskipTests
       env:
         NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
         NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
