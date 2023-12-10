@@ -6,4 +6,4 @@ This Java library contains simple Java operators which are often used in my proj
 
 ## Development
 
-To apply code styles run `mvn spotless:apply`.
+To apply code styles run `mvn spotless:apply`. Some test.
