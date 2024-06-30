@@ -4,6 +4,8 @@
  */
 package com.wellnr.commons;
 
+import com.wellnr.commons.functions.Function0;
+
 public final class StringOperators {
 
     private StringOperators() {}
@@ -44,7 +46,7 @@ public final class StringOperators {
     }
 
     /**
-     * Transforms a kebab case string to a camel case string.
+     * Compares two strings. Removes leading and trailing whitespaces and only does a case-insensitive comparison.
      *
      * @param s1 The string to check.
      * @param s2 The other string to check.
@@ -104,5 +106,54 @@ public final class StringOperators {
      */
     public static String stringToTechFriendlyName(String s) {
         return camelCaseToKebabCase(stringToCamelCase(s));
+    }
+
+    /**
+     * English word pluralization.
+     *
+     * @param word The word to pluralize.
+     * @return The pluralized word.
+     */
+    public static String pluralize(String word) {
+        if (word.endsWith("y")) {
+            return word.substring(0, word.length() - 1) + "ies";
+        } else {
+            return word + "s";
+        }
+    }
+
+    /**
+     * Validates a kebab case string, throws the specified exception if the string is not a kebab case string.
+     *
+     * @param s   The string to validate.
+     * @param e   The exception to throw if the string is not a kebab case string.
+     * @param <T> The type of the exception to throw.
+     * @return The validated string (without modification).
+     * @throws T The exception which is thrown if the string is not a kebab case string.
+     */
+    public static <T extends Exception> String validateKebabCaseString(String s, Function0<T> e)
+            throws T {
+        if (!s.matches("^[a-z]+(-[a-z0-9]+)*$")) {
+            throw e.get();
+        }
+
+        return s;
+    }
+
+    /**
+     * Validates a kebab case string, throws an exception if the string is not a kebab case string.
+     *
+     * @param s The string to validate.
+     * @return The validated string (without modification).
+     * @throws IllegalArgumentException The exception which is thrown if the string is not a kebab case string.
+     */
+    public static String validateKebabCaseString(String s) {
+        validateKebabCaseString(
+                s,
+                () ->
+                        new IllegalArgumentException(
+                                String.format("`%s` is not a kebab case string", s)));
+
+        return s;
     }
 }

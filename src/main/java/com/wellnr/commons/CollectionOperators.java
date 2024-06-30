@@ -4,6 +4,10 @@
  */
 package com.wellnr.commons;
 
+import com.wellnr.commons.functions.Function1;
+import com.wellnr.commons.functions.Function2;
+import com.wellnr.commons.markup.Tuple;
+import com.wellnr.commons.markup.Tuple2;
 import java.util.*;
 
 public final class CollectionOperators {
@@ -57,5 +61,80 @@ public final class CollectionOperators {
         } else {
             return new HashSet<>(set);
         }
+    }
+
+    /**
+     * Concat a set of lists into a single list.
+     *
+     * @param lists The lists to be concatenated.
+     * @param <T>   The type of the elements in the lists.
+     * @return The concatenated list.
+     */
+    @SafeVarargs
+    public static <T> List<T> concat(Collection<T>... lists) {
+        var result = new ArrayList<T>();
+
+        for (var list : lists) {
+            result.addAll(list);
+        }
+
+        return List.copyOf(result);
+    }
+
+    /**
+     * Creates an immutable list from a collection. The collection can be null. If the collection is null,
+     * an empty list is returned.
+     *
+     * @param source The source collection.
+     * @param <T>    The type of the elements in the collection.
+     * @return An immutable list.
+     */
+    public static <T> List<T> createImmutableList(Collection<T> source) {
+        if (Objects.isNull(source)) {
+            return List.of();
+        } else {
+            return List.copyOf(source);
+        }
+    }
+
+    /**
+     * Helper function to map alist with an index for each element.
+     *
+     * @param source The source list.
+     * @param mapper The function to map the elements with an index.
+     * @param <T>    The type of the elements in the source list.
+     * @param <U>    The mapped type of the elements in the result list.
+     * @return The mapped list.
+     */
+    public static <T, U> List<U> mapWithIndex(List<T> source, Function2<T, Integer, U> mapper) {
+        var result = new ArrayList<U>();
+        for (var i = 0; i < source.size(); i++) {
+            result.add(mapper.get(source.get(i), i));
+        }
+        return List.copyOf(result);
+    }
+
+    /**
+     * Syntactic sugar to map a list of values to a list of other values.
+     *
+     * @param source The source list.
+     * @param mapper The mapper function.
+     * @param <T>    The type of the elements in the source list.
+     * @param <U>    The mapped type of the elements in the result list.
+     * @return The mapped list.
+     */
+    public static <T, U> List<U> map(Collection<T> source, Function1<T, U> mapper) {
+        return source.stream().map(mapper::get).toList();
+    }
+
+    /**
+     * Creates a list index assigned to element from a list.
+     *
+     * @param source The source list.
+     * @param <T>    The type of the elements in the source list.
+     * @return The list index assigned to element from a list.
+     */
+    public static <T> List<Tuple2<Integer, T>> zipWithIndex(List<T> source) {
+        return mapWithIndex(source, (item, idx) -> Tuple.apply(idx, item));
     }
 }
