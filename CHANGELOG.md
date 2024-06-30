@@ -1,3 +1,9 @@
+## 1.3.0 (2024-06-30)
+
+### Feat
+
+- New extensions to utility methods and support for generic local file system repositories. (#2)
+
 ## 1.2.0 (2023-12-10)
 
 ### Feat
