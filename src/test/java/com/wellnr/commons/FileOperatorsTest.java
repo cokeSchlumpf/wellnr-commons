@@ -1,10 +1,13 @@
+/*
+ * (C) Copyright 2024. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Files;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class FileOperatorsTest {
 
@@ -16,9 +19,9 @@ class FileOperatorsTest {
 
     @Test
     public void testGetMimeTypeFromStream() {
-        var type = FileOperators.getMimeType(
-            FileOperators.getResourcesAsStream("sample-document.pdf")
-        );
+        var type =
+                FileOperators.getMimeType(
+                        FileOperators.getResourcesAsStream("sample-document.pdf"));
 
         assertEquals("application/pdf", type);
     }
@@ -30,5 +33,4 @@ class FileOperatorsTest {
 
         assertEquals("application/pdf", type);
     }
-
 }

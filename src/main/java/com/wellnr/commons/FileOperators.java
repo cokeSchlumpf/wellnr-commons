@@ -1,7 +1,8 @@
+/*
+ * (C) Copyright 2024. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons;
-
-import lombok.extern.slf4j.Slf4j;
-import org.apache.tika.Tika;
 
 import java.io.File;
 import java.io.InputStream;
@@ -10,6 +11,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.tika.Tika;
 
 /**
  * Operators to work with files.
@@ -19,8 +22,7 @@ public final class FileOperators {
 
     private static final Tika tika = new Tika();
 
-    private FileOperators() {
-    }
+    private FileOperators() {}
 
     /**
      * Returns the file extension of a given file name.
@@ -51,10 +53,10 @@ public final class FileOperators {
      * @return The MIME type of the file, or "application/octet-stream" if the MIME type could not be detected.
      */
     public static String getMimeType(Path path) {
-        var mimeType = Operators.suppressExceptions(
-            () -> tika.detect(path.toFile()),
-            "Failed to detect MIME type for file: `" + path.toString() + "`"
-        );
+        var mimeType =
+                Operators.suppressExceptions(
+                        () -> tika.detect(path.toFile()),
+                        "Failed to detect MIME type for file: `" + path.toString() + "`");
 
         if (Objects.isNull(mimeType)) {
             log.warn("Failed to detect MIME type for file: `" + path + "`");
@@ -71,10 +73,10 @@ public final class FileOperators {
      * @return The MIME type of the file, or "application/octet-stream" if the MIME type could not be detected.
      */
     public static String getMimeType(InputStream inputStream) {
-        var mimeType = Operators.suppressExceptions(
-            () -> tika.detect(inputStream),
-            "Failed to detect MIME type from input stream."
-        );
+        var mimeType =
+                Operators.suppressExceptions(
+                        () -> tika.detect(inputStream),
+                        "Failed to detect MIME type from input stream.");
 
         if (Objects.isNull(mimeType)) {
             log.warn("Failed to detect MIME type from input stream.");
@@ -91,25 +93,27 @@ public final class FileOperators {
      * @return The input stream of the resource.
      */
     public static InputStream getResourcesAsStream(String resourceName) {
-        if (!resourceName.startsWith("/")) { resourceName = "/" + resourceName; }
+        if (!resourceName.startsWith("/")) {
+            resourceName = "/" + resourceName;
+        }
         return FileOperators.class.getResourceAsStream(resourceName);
     }
 
     public static Path createTempFileFromResource(String resourceName) {
-        return Operators.suppressExceptions(() -> {
-            var tmpFile = File.createTempFile(
-                "resources",
-                "." + getFileExtension(resourceName).orElse(".tmp")
-            );
+        return Operators.suppressExceptions(
+                () -> {
+                    var tmpFile =
+                            File.createTempFile(
+                                    "resources",
+                                    "." + getFileExtension(resourceName).orElse(".tmp"));
 
-            tmpFile.deleteOnExit();
+                    tmpFile.deleteOnExit();
 
-            try (var is = getResourcesAsStream(resourceName)) {
-                Files.copy(is, tmpFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            }
+                    try (var is = getResourcesAsStream(resourceName)) {
+                        Files.copy(is, tmpFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    }
 
-            return tmpFile.toPath();
-        });
+                    return tmpFile.toPath();
+                });
     }
-
 }

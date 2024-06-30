@@ -1,10 +1,12 @@
+/*
+ * (C) Copyright 2024. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons.persistence;
 
 import com.wellnr.commons.StringOperators;
 import com.wellnr.commons.functions.Function1;
 import com.wellnr.commons.functions.Procedure2;
-import lombok.extern.slf4j.Slf4j;
-
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * A generic file system repository implementation.
@@ -68,13 +71,13 @@ public class WorkspaceEntityFileSystemRepository<T> {
      * @param directoryName    The name of the directory where the entities are stored (within working directory).
      */
     public WorkspaceEntityFileSystemRepository(
-        Class<T> entityClass,
-        Function1<T, String> getId,
-        Path workingDirectory,
-        Function1<Path, T> readValue,
-        Procedure2<Path, T> writeValue,
-        String entityName,
-        String directoryName) {
+            Class<T> entityClass,
+            Function1<T, String> getId,
+            Path workingDirectory,
+            Function1<Path, T> readValue,
+            Procedure2<Path, T> writeValue,
+            String entityName,
+            String directoryName) {
 
         this.getId = getId;
         this.workingDirectory = workingDirectory.resolve("workspaces");
@@ -96,17 +99,20 @@ public class WorkspaceEntityFileSystemRepository<T> {
      * @param entityName       The name of the entity type. This value is used to create file-name extensions.
      */
     public WorkspaceEntityFileSystemRepository(
-        Class<T> entityClass,
-        Function1<T, String> getId,
-        Path workingDirectory,
-        Function1<Path, T> readValue,
-        Procedure2<Path, T> writeValue,
-        String entityName
-    ) {
+            Class<T> entityClass,
+            Function1<T, String> getId,
+            Path workingDirectory,
+            Function1<Path, T> readValue,
+            Procedure2<Path, T> writeValue,
+            String entityName) {
         this(
-            entityClass, getId, workingDirectory, readValue, writeValue, entityName,
-            StringOperators.pluralize(entityName.toLowerCase())
-        );
+                entityClass,
+                getId,
+                workingDirectory,
+                readValue,
+                writeValue,
+                entityName,
+                StringOperators.pluralize(entityName.toLowerCase()));
     }
 
     /**
@@ -119,16 +125,18 @@ public class WorkspaceEntityFileSystemRepository<T> {
      * @param writeValue       The function that writes an entity to a file.
      */
     public WorkspaceEntityFileSystemRepository(
-        Class<T> entityClass,
-        Function1<T, String> getId,
-        Path workingDirectory,
-        Function1<Path, T> readValue,
-        Procedure2<Path, T> writeValue
-    ) {
+            Class<T> entityClass,
+            Function1<T, String> getId,
+            Path workingDirectory,
+            Function1<Path, T> readValue,
+            Procedure2<Path, T> writeValue) {
         this(
-            entityClass, getId, workingDirectory, readValue, writeValue,
-            StringOperators.camelCaseToKebabCase(entityClass.getSimpleName())
-        );
+                entityClass,
+                getId,
+                workingDirectory,
+                readValue,
+                writeValue,
+                StringOperators.camelCaseToKebabCase(entityClass.getSimpleName()));
     }
 
     public void delete(String workspaceId, String id) {
@@ -165,14 +173,18 @@ public class WorkspaceEntityFileSystemRepository<T> {
 
     private FileSystemRepository<T> getRepository(String workspaceId) {
         if (!repositories.containsKey(workspaceId)) {
-            var repository = new FileSystemRepository<>(
-                getId, workingDirectory.resolve(workspaceId), readValue, writeValue, entityName, directoryName
-            );
+            var repository =
+                    new FileSystemRepository<>(
+                            getId,
+                            workingDirectory.resolve(workspaceId),
+                            readValue,
+                            writeValue,
+                            entityName,
+                            directoryName);
 
             repositories.put(workspaceId, repository);
         }
 
         return repositories.get(workspaceId);
     }
-
 }

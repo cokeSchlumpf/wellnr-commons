@@ -1,17 +1,20 @@
+/*
+ * (C) Copyright 2024. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons.persistence;
 
 import com.wellnr.commons.Operators;
 import com.wellnr.commons.StringOperators;
 import com.wellnr.commons.functions.Function1;
 import com.wellnr.commons.functions.Procedure2;
-import lombok.extern.slf4j.Slf4j;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * A generic file system repository implementation.
@@ -57,12 +60,12 @@ public class FileSystemRepository<T> {
      * @param directoryName    The name of the directory where the entities are stored (within working directory).
      */
     public FileSystemRepository(
-        Function1<T, String> getId,
-        Path workingDirectory,
-        Function1<Path, T> readValue,
-        Procedure2<Path, T> writeValue,
-        String entityName,
-        String directoryName) {
+            Function1<T, String> getId,
+            Path workingDirectory,
+            Function1<Path, T> readValue,
+            Procedure2<Path, T> writeValue,
+            String entityName,
+            String directoryName) {
 
         this.getId = getId;
         this.workingDirectory = workingDirectory.resolve(directoryName.toLowerCase());
@@ -70,9 +73,10 @@ public class FileSystemRepository<T> {
         this.writeValue = writeValue;
         this.entityName = entityName.toLowerCase();
 
-        Operators.suppressExceptions(() -> {
-            Files.createDirectories(this.workingDirectory);
-        });
+        Operators.suppressExceptions(
+                () -> {
+                    Files.createDirectories(this.workingDirectory);
+                });
     }
 
     /**
@@ -85,16 +89,18 @@ public class FileSystemRepository<T> {
      * @param entityName       The name of the entity type. This value is used to create file-name extensions.
      */
     public FileSystemRepository(
-        Function1<T, String> getId,
-        Path workingDirectory,
-        Function1<Path, T> readValue,
-        Procedure2<Path, T> writeValue,
-        String entityName
-    ) {
+            Function1<T, String> getId,
+            Path workingDirectory,
+            Function1<Path, T> readValue,
+            Procedure2<Path, T> writeValue,
+            String entityName) {
         this(
-            getId, workingDirectory, readValue, writeValue, entityName,
-            StringOperators.pluralize(entityName.toLowerCase())
-        );
+                getId,
+                workingDirectory,
+                readValue,
+                writeValue,
+                entityName,
+                StringOperators.pluralize(entityName.toLowerCase()));
     }
 
     /**
@@ -106,16 +112,17 @@ public class FileSystemRepository<T> {
      * @param writeValue       The function that writes an entity to a file.
      */
     public FileSystemRepository(
-        Function1<T, String> getId,
-        Path workingDirectory,
-        Function1<Path, T> readValue,
-        Procedure2<Path, T> writeValue,
-        Class<T> entityClass
-    ) {
+            Function1<T, String> getId,
+            Path workingDirectory,
+            Function1<Path, T> readValue,
+            Procedure2<Path, T> writeValue,
+            Class<T> entityClass) {
         this(
-            getId, workingDirectory, readValue, writeValue,
-            StringOperators.camelCaseToKebabCase(entityClass.getSimpleName())
-        );
+                getId,
+                workingDirectory,
+                readValue,
+                writeValue,
+                StringOperators.camelCaseToKebabCase(entityClass.getSimpleName()));
     }
 
     public void delete(String id) {
@@ -131,16 +138,21 @@ public class FileSystemRepository<T> {
     }
 
     public List<T> findAll() {
-        return Operators
-            .suppressExceptions(() -> Files.list(workingDirectory))
-            .filter(p -> p.getFileName().toString().endsWith("." + entityName + ".json"))
-            .map(p -> Operators.ignoreExceptionsToOptional(
-                () -> this.readValue.get(p),
-                ex -> log.warn("An exception occurred while reading entity form file `{}`.", p.getFileName(), ex)
-            ))
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .toList();
+        return Operators.suppressExceptions(() -> Files.list(workingDirectory))
+                .filter(p -> p.getFileName().toString().endsWith("." + entityName + ".json"))
+                .map(
+                        p ->
+                                Operators.ignoreExceptionsToOptional(
+                                        () -> this.readValue.get(p),
+                                        ex ->
+                                                log.warn(
+                                                        "An exception occurred while reading entity"
+                                                                + " form file `{}`.",
+                                                        p.getFileName(),
+                                                        ex)))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
     }
 
     public List<T> findAllBy(Predicate<T> predicate) {
@@ -160,8 +172,8 @@ public class FileSystemRepository<T> {
 
         if (Files.exists(file)) {
             return Operators.ignoreExceptionsToOptional(
-                () -> this.readValue.get(file),
-                ex -> log.warn("An exception occurred while reading entity `{}`.", id, ex));
+                    () -> this.readValue.get(file),
+                    ex -> log.warn("An exception occurred while reading entity `{}`.", id, ex));
         } else {
             return Optional.empty();
         }
@@ -170,13 +182,11 @@ public class FileSystemRepository<T> {
     public void save(T entity) {
         var file = getEntityPath(getId.get(entity));
         Operators.suppressExceptions(
-            () -> writeValue.run(file, entity),
-            "An exception occurred while writing entity `" + file + "`."
-        );
+                () -> writeValue.run(file, entity),
+                "An exception occurred while writing entity `" + file + "`.");
     }
 
     private Path getEntityPath(String id) {
         return workingDirectory.resolve(id + "." + entityName + ".json");
     }
-
 }

@@ -8,8 +8,7 @@ import com.wellnr.commons.functions.Function0;
 
 public final class StringOperators {
 
-    private StringOperators() {
-    }
+    private StringOperators() {}
 
     /**
      * Transforms a camel case string to a human-readable string.
@@ -19,13 +18,13 @@ public final class StringOperators {
      */
     public static String camelCaseToHumanReadable(String s) {
         var result =
-            s.replaceAll(
-                String.format(
-                    "%s|%s|%s",
-                    "(?<=[A-Z])(?=[A-Z][a-z])",
-                    "(?<=[^A-Z])(?=[A-Z])",
-                    "(?<=[A-Za-z])(?=[^A-Za-z])"),
-                " ");
+                s.replaceAll(
+                        String.format(
+                                "%s|%s|%s",
+                                "(?<=[A-Z])(?=[A-Z][a-z])",
+                                "(?<=[^A-Z])(?=[A-Z])",
+                                "(?<=[A-Za-z])(?=[^A-Za-z])"),
+                        " ");
 
         if (result.length() > 1) {
             return result.substring(0, 1).toUpperCase() + result.substring(1);
@@ -42,8 +41,8 @@ public final class StringOperators {
      */
     public static String camelCaseToKebabCase(String s) {
         return s.replaceAll("([a-z0-9])([A-Z])", "$1-$2")
-            .replaceAll("([A-Z])([A-Z])(?=[a-z])", "$1-$2")
-            .toLowerCase();
+                .replaceAll("([A-Z])([A-Z])(?=[a-z])", "$1-$2")
+                .toLowerCase();
     }
 
     /**
@@ -132,7 +131,8 @@ public final class StringOperators {
      * @return The validated string (without modification).
      * @throws T The exception which is thrown if the string is not a kebab case string.
      */
-    public static <T extends Exception> String validateKebabCaseString(String s, Function0<T> e) throws T {
+    public static <T extends Exception> String validateKebabCaseString(String s, Function0<T> e)
+            throws T {
         if (!s.matches("^[a-z]+(-[a-z0-9]+)*$")) {
             throw e.get();
         }
@@ -148,9 +148,11 @@ public final class StringOperators {
      * @throws IllegalArgumentException The exception which is thrown if the string is not a kebab case string.
      */
     public static String validateKebabCaseString(String s) {
-        validateKebabCaseString(s, () -> new IllegalArgumentException(
-            String.format("`%s` is not a kebab case string", s)
-        ));
+        validateKebabCaseString(
+                s,
+                () ->
+                        new IllegalArgumentException(
+                                String.format("`%s` is not a kebab case string", s)));
 
         return s;
     }

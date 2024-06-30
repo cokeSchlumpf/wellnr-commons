@@ -8,13 +8,11 @@ import com.wellnr.commons.functions.Function1;
 import com.wellnr.commons.functions.Function2;
 import com.wellnr.commons.markup.Tuple;
 import com.wellnr.commons.markup.Tuple2;
-
 import java.util.*;
 
 public final class CollectionOperators {
 
-    private CollectionOperators() {
-    }
+    private CollectionOperators() {}
 
     /**
      * This method returns a mutable list. If the list is null, a new list is created.
@@ -139,5 +137,4 @@ public final class CollectionOperators {
     public static <T> List<Tuple2<Integer, T>> zipWithIndex(List<T> source) {
         return mapWithIndex(source, (item, idx) -> Tuple.apply(idx, item));
     }
-
 }

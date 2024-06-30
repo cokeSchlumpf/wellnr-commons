@@ -1,3 +1,7 @@
+/*
+ * (C) Copyright 2024. Licensed under the Apache License, Version 2.0.
+ * Author: Michael Wellner (https://github.com/cokeSchlumpf/).
+ */
 package com.wellnr.commons.exceptions;
 
 /**
@@ -13,5 +17,4 @@ public class DomainException extends RuntimeException {
     protected DomainException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }
